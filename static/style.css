@@ -30,4 +30,10 @@
 	position:absolute;
 	border: thin solid black;
 	border-radius: 100px;
+	display:none;
+}
+.instructions {
+	text-align: center;
+	font-size: 2em;
+	color: grey;
 }

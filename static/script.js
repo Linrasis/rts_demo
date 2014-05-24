@@ -82,17 +82,19 @@ function inBoundingBox(thisObject, left, top, right, bottom){
 function moveUnits(x, y){
 	$('.gamePiece.selected').each(function(){
 		$(this).addClass('moving');
-		units[$(this).index()].move += 1;
-		moveUnit(this, x, y, units[$(this).index()].move);
+		console.log($(this).index()-1);
+		units[$(this).index()-1].move += 1;
+		moveUnit(this, x, y, units[$(this).index()-1].move);
 	});
 }
 function moveUnit(unit, x, y, num){
-	var j = $(unit).index();
-	if (units[$(unit).index()].move == num){
-		var i = unitMove;
+	var j = $(unit).index()-1;
+	if (units[$(unit).index()-1].move == num){
+		var w = Math.sqrt(Math.pow($(unit).position().top - y, 2) + Math.pow($(unit).position().left - x, 2));
+		var i = unitMove * Math.abs(($(unit).position().top - y)/w);
 		var again = false;
 		
-		if ($(unit).position().top < y){i = -unitMove}
+		if ($(unit).position().top < y){i = -i}
 		var a = y - $(unit).position().top + i;
 		var b = y - $(unit).position().top;
 		if (Math.abs(a) < Math.abs(b)){
@@ -101,8 +103,8 @@ function moveUnit(unit, x, y, num){
 		else { i = 0;}
 		var newTop = $(unit).position().top - i;
 		
-		var j = unitMove;
-		if ($(unit).position().left < x){j = -unitMove}
+		var j = unitMove * Math.abs(($(unit).position().left - x)/w);
+		if ($(unit).position().left < x){j = -j}
 		var a = x - $(unit).position().left + j;
 		var b = x - $(unit).position().left;
 		if (Math.abs(a) < Math.abs(b)){
